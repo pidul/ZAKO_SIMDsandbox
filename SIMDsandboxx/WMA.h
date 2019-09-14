@@ -114,7 +114,7 @@ class WMA
         }
     }
 public:
-    void Start()
+    void Start(int toProcess)
     {
         for (int i = 0; i < DATA_STREAMS; ++i)
         {
@@ -124,7 +124,7 @@ public:
             result.push_back(tempResult);
         }
 
-        std::ifstream fin("data.txt");
+        std::ifstream fin("data" + std::to_string(toProcess) + ".txt");
         while (!fin.eof())
         {
             for (uint32_t i = 0; i < DATA_STREAMS; ++i)
@@ -134,12 +134,12 @@ public:
                 data[i].push_back(temp);
             }
         }
-        SISDProcess();
+        //SISDProcess();
 
-        for (int i = 0; i < DATA_STREAMS; ++i)
+        /*for (int i = 0; i < DATA_STREAMS; ++i)
         {
             result[i].clear();
-        }
+        }*/
 
         SIMDProcess();
     }
