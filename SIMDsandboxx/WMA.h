@@ -6,7 +6,6 @@
 #include <chrono>
 #include "GenerateData.h"
 #include "immintrin.h"
-#define N_PROBES 100000
 
 union DATA{ __m256 a8; float a[8]; };
 
@@ -114,7 +113,7 @@ class WMA
         }
     }
 public:
-    void Start(int toProcess)
+    void Start(float toProcess[DATA_STREAMS * DATA_SIZE])
     {
         for (int i = 0; i < DATA_STREAMS; ++i)
         {
@@ -124,16 +123,11 @@ public:
             result.push_back(tempResult);
         }
 
-        std::ifstream fin("data" + std::to_string(toProcess) + ".txt");
-        while (!fin.eof())
+        for (int i = 0; i < DATA_STREAMS * DATA_SIZE; ++i)
         {
-            for (uint32_t i = 0; i < DATA_STREAMS; ++i)
-            {
-                float temp;
-                fin >> temp;
-                data[i].push_back(temp);
-            }
+            data[i % 8].push_back(toProcess[i]);
         }
+
         //SISDProcess();
 
         /*for (int i = 0; i < DATA_STREAMS; ++i)

@@ -18,11 +18,11 @@ void Print(std::ofstream &fout, T first, Args... args)
 
 void GenerateData()
 {
-    for (int j = 0; j < 16; ++j) 
+    for (int j = 0; j < DATA_PACKS; ++j)
     {
 	std::ofstream fout(std::string("data") + std::to_string(j) + ".txt");
 	std::random_device rd;
-	for (int i = 0; i < 100000; ++i)
+	for (int i = 0; i < DATA_SIZE; ++i)
 	{
 		Print(fout,
 		    (float)(rd()) / rd.max(),
